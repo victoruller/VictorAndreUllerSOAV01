@@ -1,0 +1,28 @@
+# depslib dependency file v1.0
+1712503195 source:c:\victortrabalhos\c\victorandreullersoav01\main.c
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	"wait.h"
+	<sys/types.h>
+
+1712501196 source:c:\victortrabalhos\c\victorandreullersoav01\wait.h
+	<stdio.h>
+	<stdlib.h>
+	<sys/time.h>
+	<errno.h>
+	<string.h>
+
+1712502828 c:\victortrabalhos\c\victorandreullersoav01\wait.h
+	<stdio.h>
+	<stdlib.h>
+	<sys/time.h>
+	<errno.h>
+	<string.h>
+
+1712513841 source:c:\victortrabalhos\c\victorandreullersoav01\tempo.c
+	<stdlib.h>
+	<stdio.h>
+	<time.h>
+	<string.h>
+
