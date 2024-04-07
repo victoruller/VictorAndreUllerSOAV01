@@ -1,3 +1,4 @@
+
 // no WSL cd /mnt/c/victorTrabalhos/C/VictorAndreUllerSOAV01
 #include <stdlib.h>
 #include <stdio.h>
