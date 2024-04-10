@@ -80,13 +80,7 @@ if (ptrUnidades == MAP_FAILED) {
         pthread_mutex_unlock(&Unidades);
 
 
-		//printf("Passaram %d quilos!\n", *ptr);// Realiza seu trabalho
-
-		// Calcula inicio do proximo periodo
 		t.tv_sec += 1;
-		/*t.tv_nsec += periodo;
-		t.tv_nsec += periodo;
-		t.tv_nsec += periodo;*/
 		while (t.tv_nsec >= NSEC_PER_SEC) {
 			t.tv_nsec -= NSEC_PER_SEC;//tira 1 segundo dos nanosegundos
 			t.tv_sec++;//aumenta 1 segundo dos segundos (?)

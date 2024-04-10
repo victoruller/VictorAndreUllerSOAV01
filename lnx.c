@@ -41,7 +41,14 @@ criar relatorio
 
 */
 
+//variaveis globais
 double time1, timedif;
+
+
+
+
+
+
 
 
 int main(){
@@ -110,8 +117,8 @@ if (scan1_pid < 0 || scan2_pid < 0) { /* error occurred */
 
 	}
 	else { /* parent process */
-		/* parent will wait for the child to complete */
-		struct timespec t;
+
+    struct timespec t;
 	int secs = 2;
 
 	clock_gettime(CLOCK_MONOTONIC ,&t);// Le a hora atual, coloca em t
@@ -122,7 +129,7 @@ if (scan1_pid < 0 || scan2_pid < 0) { /* error occurred */
         do {
         i++;
 		clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &t, NULL);// Espera ateh inicio do proximo periodo
-		system("cls");
+		system("clear");
 		printf("\nTotal de Itens: %d\n", *ptrUnidades);
 		printf("Passaram %d quilos!\n", *ptrPeso);
 

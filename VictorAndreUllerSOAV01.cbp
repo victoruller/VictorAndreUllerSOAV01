@@ -37,16 +37,22 @@
 		<Unit filename="Esteira2.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="VersaoLinux.c">
+		<Unit filename="co.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="co.c">
+		<Unit filename="linuxMultithread.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="lnx.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="tempo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="teste.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="wds.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>
