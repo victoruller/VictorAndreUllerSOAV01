@@ -247,6 +247,8 @@ timedif = timedif + ( ((double) clock()) / CLOCKS_PER_SEC) - time1; /* call cloc
     kill(scan2_pid, SIGTERM);
     close(newsockfd);
     close(sockfd);
+    close(newsockfd2);
+    close(sockfd2);
 	}
 
 
