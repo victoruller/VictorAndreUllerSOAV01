@@ -1,90 +1,79 @@
-/*
-*	Implementa uma tarefa periodica usando clock_nanosleep em modo absoluto
-*	Compilar com:	gcc -lrt -o tarefaperiodica1 tarefaperiodica1.c
-*	ou
-*			gcc -o tarefaperiodica1 tarefaperiodica1.c -lrt
-*/
 
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/un.h>
+#include <unistd.h>
+#include <ctype.h>
 #include <time.h>
-#include <string.h>
-
-#include <fcntl.h>
-#include <sys/shm.h>
-#include <sys/stat.h>
-#include <sys/mman.h>
-
-#include <pthread.h>
 
 #define NSEC_PER_SEC    (1000000000) 	// Numero de nanosegundos em um milissegundo
+double time1, timedif=0;
 
+int main(int argc, char* argv[]){
+usleep(2000000);
+printf("\niniciando %s\n",argv[0]);
 
-int main(int argc, char* argv[])
-{
-//Abertura do espaço de memória
-int *ptrPeso;
-int shm_fdPeso;
-shm_fdPeso =  shm_open("peso", O_RDWR, 0);
-if(shm_fdPeso == -1){
-    printf("erro na criacao da memoria Peso em esteira1\n");
-    exit(1);
-}
+time1 = (double) clock();            /* get initial time */
+time1 = time1 / CLOCKS_PER_SEC;      /*    in seconds    */
+char * SOCK_PATH = argv[0];
 
-ptrPeso = mmap(0,32, PROT_WRITE, MAP_SHARED, shm_fdPeso, 0);
-if (ptrPeso == MAP_FAILED) {
-		printf("Erro no mapeamento Peso em esteira1\n");
-		return -1;
-	}
+///CRIANDO PIPE
+int sockfd, len;
+    struct sockaddr_un remote;
+    char buffer[128];
 
-int *ptrUnidades;
-int shm_fdUnidades;
-shm_fdUnidades =  shm_open("unidades", O_RDWR, 0);
-if(shm_fdUnidades == -1){
-    printf("erro na criacao da memoria Unidade em esteira1\n");
-    exit(1);
-}
+    // Create socket
+    sockfd = socket(AF_UNIX, SOCK_STREAM, 0);
+    if (sockfd < 0)
+    {
+        perror("Falha em criar o socket 2\n");
+        return 1;
+    }
 
-ptrUnidades = mmap(0,32, PROT_WRITE, MAP_SHARED, shm_fdUnidades, 0);
-if (ptrUnidades == MAP_FAILED) {
-		printf("Erro no mapeamento Unidade em esteira1\n");
-		return -1;
-	}
-
-
-
-
+///CONECTANDO NO PIPE
+    memset(&remote, 0, sizeof(remote));
+    remote.sun_family = AF_UNIX;
+    strncpy(remote.sun_path, SOCK_PATH, sizeof(remote.sun_path) - 1);
+    len = strlen(remote.sun_path) + sizeof(remote.sun_family);
+    if (connect(sockfd, (struct sockaddr *)&remote, len) < 0)
+    {
+        perror("Falha em conectar no servidor 2\n");
+        close(sockfd);
+        return 1;
+    }
 
 
 	struct timespec t;
 
 	clock_gettime(CLOCK_MONOTONIC ,&t);// Le a hora atual, coloca em t
-
-	t.tv_sec++;	// aumenta t em 1 segundo
     int i=0;
-
+timedif = timedif + ( ((double) clock()) / CLOCKS_PER_SEC) - time1; /* call clock a second time */
         do {
+time1 = (double) clock();            /* get initial time */
+time1 = time1 / CLOCKS_PER_SEC;      /*    in seconds    */
         i++;
 		clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &t, NULL);// Espera ateh inicio do proximo periodo
 
 
-        pthread_mutex_t Peso = PTHREAD_MUTEX_INITIALIZER;
-        pthread_mutex_lock(&Peso);
-        *ptrPeso+= 2;
-        pthread_mutex_unlock(&Peso);
-
-
-        pthread_mutex_t Unidades = PTHREAD_MUTEX_INITIALIZER;
-        pthread_mutex_lock(&Unidades);
-        *ptrUnidades+=1;
-        pthread_mutex_unlock(&Unidades);
+///ENVIANDO PARA O PIPE
+    if (write(sockfd, "2", 1) < 0){
+        perror("Falha em escrever no socket 2");
+        close(sockfd);
+        return 1;
+    }
 
 
 		t.tv_sec += 1;
+timedif = timedif + ( ((double) clock()) / CLOCKS_PER_SEC) - time1; /* call clock a second time */
 		while (t.tv_nsec >= NSEC_PER_SEC) {
 			t.tv_nsec -= NSEC_PER_SEC;//tira 1 segundo dos nanosegundos
 			t.tv_sec++;//aumenta 1 segundo dos segundos (?)
 		}
+printf("The elapsed time da esteira 2 is %f seconds\n", timedif);
 	}while(1);
+	/// FECHANDO PIPE
+    close(sockfd);
 	exit(1);
 }

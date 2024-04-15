@@ -37,16 +37,25 @@
 		<Unit filename="Esteira2.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="_Esteira1.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="_Esteira2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="_linuxPipeline.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="co.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="linuxMultithread.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="lnx.c">
+		<Unit filename="linuxPipeline.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="tempo.c">
+		<Unit filename="lnx.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="teste.c">
