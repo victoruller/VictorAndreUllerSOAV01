@@ -1,4 +1,13 @@
 para executar, deve-se baixar todos os arquivos, abrir o WSL, ir até o diretório
 
-executar o comando 
+executar o comando:
 gcc -o co co.c
+
+em seguida:
+./co
+
+esse programa compilará os demais, e iniciará a execução do Multithread em Linux
+
+após ele, executar
+./comp 
+para iniciar o pipeline em Linux
